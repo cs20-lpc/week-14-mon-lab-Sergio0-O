@@ -1,16 +1,55 @@
 template <typename T>
 void ArrayList<T>::bubbleSort() {
     // TODO
+    for (int i = 0; i < this->length - 1; i++) {
+        for (int j = 0; j < this->length - 1 - i; j++) {
+            numComps++;
+            if (buffer[j] > buffer[j + 1]) {
+                swap(j, j + 1);
+                numSwaps++;
+            }
+        }
+    }
 }
 
 template <typename T>
 void ArrayList<T>::insertionSort() {
     // TODO
+    for (int i = 1; i < this->length; i++) {
+        int j = i;
+
+        while (j > 0) {
+            numComps++;
+            if (buffer[j] < buffer[j - 1]) {
+                swap(j, j - 1);
+                numSwaps++;
+                j--;
+            }
+            else {
+                break;
+            }
+        }
+    }
 }
 
 template <typename T>
 void ArrayList<T>::selectionSort() {
     // TODO
+    for (int i = 0; i < this->length - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < this->length; j++) {
+            numComps++;
+            if (buffer[j] < buffer[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        if (minIndex != i) {
+            swap(i, minIndex);
+            numSwaps++;
+        }
+    }
 }
 
 /*******************************************************************************
@@ -112,15 +151,15 @@ void ArrayList<T>::insert(int position, const T& elem) {
     if (position < 0 || position >= this->length) {
         throw string("insert: error, position out of bounds");
     }
-    
+
     if (isFull()) {
         throw string("insert: error, list is full");
     }
-    
+
     for (int i = this->length; i > position; i--) {
         buffer[i] = buffer[i - 1];
     }
-    
+
     buffer[position] = elem;
     this->length++;
 }
@@ -152,7 +191,7 @@ void ArrayList<T>::replace(int position, const T& elem) {
     if (position < 0 || position >= this->length) {
         throw string("replace: error, position out of bounds");
     }
-    
+
     buffer[position] = elem;
 }
 
